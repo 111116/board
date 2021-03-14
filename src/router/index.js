@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 // pages
 import home from '@/components/home.vue'
 import login from '@/components/page/login.vue'
+import signup from '@/components/page/signup.vue'
 import pagenotfound from '@/components/page/404.vue'
 
 import assetlist      from '@/components/page/assets/assetlist.vue'
@@ -23,6 +24,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: login
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: signup
   },
   {
     path: '/',

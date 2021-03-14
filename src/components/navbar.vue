@@ -6,12 +6,15 @@
             <div type="text" class="button" @click="showmyinfo">
                 {{myname}}
             </div>
-            <div type="text" class="button" @click="login">
+            <el-button v-if="!loggedin" type="text" class="button" @click="login">
                 登入
-            </div>
-            <div type="text" class="button" @click="logout">
+            </el-button>
+            <el-button v-if="!loggedin" type="text" class="button" @click="signup">
+                注册
+            </el-button>
+            <el-button v-if="loggedin" type="text" class="button" @click="logout">
                 登出
-            </div>
+            </el-button>
         </div>
     </div>
 </template>
@@ -28,6 +31,9 @@
         };
     },
     computed: {
+        loggedin() {
+            return this.myname!=""
+        },
     },
     beforeMount(){
         this.checkstatus()
@@ -43,9 +49,13 @@
         },
         checkstatus() {
             this.myname = commonQueries.getCookie("username")
+            console.log("name:", this.myname)
         },
         login() {
             this.$router.push('/login')
+        },
+        signup() {
+            this.$router.push('/signup')
         },
         // 全屏事件
         logout() {

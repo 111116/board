@@ -1,8 +1,8 @@
-<!--login page-->
+<!--signup page-->
 <template>
-<div class="login-wrap">
-    <div class="login-box">
-        <div class="login-title">Storyboard</div>
+<div class="signup-wrap">
+    <div class="signup-box">
+        <div class="signup-title">Storyboard</div>
         <el-container>
             <el-main>
                 <el-form>
@@ -10,12 +10,15 @@
                         <el-input placeholder="请输入用户名" v-model="username"/>
                     </el-form-item>
                     <el-form-item label="密码">
-                        <el-input placeholder="请输入密码" v-model="password" show-password @keyup.enter.native="login"/>
+                        <el-input placeholder="请输入密码" v-model="password" show-password />
+                    </el-form-item>
+                    <el-form-item label="密码确认">
+                        <el-input placeholder="请重复密码" v-model="passwordrepeat" show-password @keyup.enter.native="signup"/>
                     </el-form-item>
                 </el-form>
             </el-main>
             <el-footer>
-                <el-button class="login-button" v-on:click="login">登录</el-button>
+                <el-button class="signup-button" v-on:click="signup">注册</el-button>
             </el-footer>
         </el-container>
     </div>
@@ -24,28 +27,41 @@
 <script>
 import httpRequest from "@/utils/communication"
 export default {
-    name: 'login',
+    name: 'signup',
     components: {
     },
     data(){
         return{
             username: "",
             password: "",
+            passwordrepeat: "",
             success: false,
         }
     },
     methods: {
-        login: function(){
+        signup: function(){
+            if (this.username.length<3) {
+                this.$message.error('用户名太短');
+                return;
+            }
+            if (this.password.length<6) {
+                this.$message.error('密码太短');
+                return;
+            }
+            if (this.passwordrepeat != this.password) {
+                this.$message.error('两次输入密码不同');
+                return;
+            }
             let xhr = new XMLHttpRequest()
-            httpRequest.post(xhr, "/api/user/login", {username: this.username, password: this.password})
+            httpRequest.post(xhr, "/api/user/create", {username: this.username, password: this.password})
             xhr.onload = () => {this.checkstatus(xhr)}
         },
         checkstatus: function(xhr){
             console.log(xhr.status)
             if (xhr.status == 200){
                 this.success = true
-                this.$message.success('登录成功');
-                this.$router.push('/')
+                this.$message.success('注册成功');
+                this.$router.push('/login')
             }else if (xhr.status == 401){
                 this.$message.error('用户名或密码错误！');
             }else if (xhr.status == 500){
@@ -59,9 +75,9 @@ export default {
 </script>
 
 <style scoped>
-    .login-wrap {
+    .signup-wrap {
     }
-    .login-box {
+    .signup-box {
         position: absolute;
         left: 50%;
         top: 50%;
@@ -70,7 +86,7 @@ export default {
         border-radius: 5px;
         border: #ddd 1px solid;
     }
-    .login-title {
+    .signup-title {
         width: 100%;
         line-height: 60px;
         text-align: center;
