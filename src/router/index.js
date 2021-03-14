@@ -7,6 +7,7 @@ import login from '@/components/page/login.vue'
 import pagenotfound from '@/components/page/404.vue'
 
 import assetlist      from '@/components/page/assets/assetlist.vue'
+import thread from '@/components/page/assets/thread.vue'
 
 import '@/assets/main.css'
 
@@ -29,6 +30,10 @@ const routes = [
       {
         path: '/assets/list',
         component: assetlist,
+      },
+      {
+        path: 'thread',
+        component: thread,
       }
     ]
   },

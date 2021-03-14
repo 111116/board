@@ -14,5 +14,6 @@ module.exports = {
   transpileDependencies: [
     'vue-echarts',
     'resize-detector'
-  ]
+  ],
+  publicPath: 'board',
 }

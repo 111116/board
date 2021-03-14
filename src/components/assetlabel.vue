@@ -1,6 +1,9 @@
 <!--user list-->
 <template>
     <div>
+        {{this[0]}}
+    </div>
+    <!-- <div>
         <div class="label-outer-wrapper" :id="elementid">
             <div class="label-wrapper">
                 <div class="title">资产标签</div>
@@ -13,7 +16,7 @@
             </div>
         </div>
         <el-button @click="download">下载标签</el-button>
-    </div>
+    </div> -->
 </template>
 
 <script>
