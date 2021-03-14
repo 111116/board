@@ -8,6 +8,7 @@ import pagenotfound from '@/components/page/404.vue'
 
 import assetlist      from '@/components/page/assets/assetlist.vue'
 import thread from '@/components/page/assets/thread.vue'
+import newstory from '@/components/page/assets/newstory.vue'
 
 import '@/assets/main.css'
 
@@ -16,7 +17,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/assets/list'
+    redirect: '/list'
   },
   {
     path: '/login',
@@ -28,12 +29,16 @@ const routes = [
     component: home,
     children: [
       {
-        path: '/assets/list',
+        path: '/list',
         component: assetlist,
       },
       {
         path: 'thread',
         component: thread,
+      },
+      {
+        path: 'newstory',
+        component: newstory,
       }
     ]
   },

@@ -1,11 +1,14 @@
 <template>
 <div>
     <h2>故事列表</h2>
-    <template v-for="item in posts">
-        {{item.title}}
-        <template v-for="re in item.content">
-            {{re[1]}}
-        </template>
+    <a href="/newstory">创建新故事</a>
+    <template v-for="(item, index) in posts">
+        <div :key="`fruit-${index}`">
+            <a :href="`/thread?id=${item.id}`">{{item.title}}</a>
+            <template v-for="re in item.content">
+                {{re[1]}}
+            </template>
+        </div>
     </template>
 </div>
 </template>

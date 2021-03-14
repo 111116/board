@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <!-- 折叠按钮 -->
-        <div class="logo">Storyboard</div>
+        <a class="logo" href="/">Storyboard</a>
         <div class="header-right">
             <div type="text" class="button" @click="showmyinfo">
                 {{myname}}
@@ -74,10 +74,13 @@
     line-height: 60px;
 }
 .header .logo {
-    float: left;
     width: 250px;
+    margin: 20px;
     line-height: 60px;
     text-align: left;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
 }
 .header-right {
     float: right;
@@ -94,7 +97,4 @@
     cursor: pointer;
 }
 
-.userinfo {
-    line-height: 2em;
-}
 </style>
