@@ -4,6 +4,15 @@
     <template v-for="(re, index) in post.content">
         <postitem :key="`fruit-${index}`" :author="re[0]" :content="re[1]"/>
     </template>
+    <!-- reply -->
+    <el-form :model="form">
+        <el-form-item label="接着讲一段">
+            <el-input type="textarea" v-model="form.content" autocomplete="off"></el-input>
+        </el-form-item>
+    </el-form>
+    <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitReply">发布</el-button>
+    </span>
 </div>
 </template>
 
@@ -17,6 +26,9 @@ export default {
     },
     data(){
         return {
+            form: {
+                content: "",
+            },
             post: {},
             id: undefined,
         }
@@ -38,6 +50,26 @@ export default {
             }
             xhr.send()
         },
+        submitReply() {
+            if (this.form.content.length < 1) {
+                this.$message.error("内容不能少于一个字")
+                return
+            }
+            let xhr = new XMLHttpRequest
+            xhr.open("post","/api/thread/update")
+            xhr.send(JSON.stringify({content:this.form.content,id:this.id}))
+            xhr.onload = (e)=>{
+                if (e.target.status == 200) {
+                    this.$message.success("发布成功")
+                    this.$router.push('/')
+                }
+                else {
+                    console.error("edit failed", e.target.status)
+                    this.$message.error("发布失败")
+                }
+            }
+            xhr.onerror = ()=>{this.$message.error("发布失败")}
+        }
     }
 }
 </script>
