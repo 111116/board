@@ -1,12 +1,12 @@
 <template>
-<div>
+<div class="maindiv">
     <h2>{{post.title}}</h2>
     <postitem v-for="(re, index) in post.content"
         :key="`fruit-${index}`" :author="re[0]" :content="re[1]"/>
     <!-- reply -->
     <el-form :model="form">
         <el-form-item label="接着讲一段">
-            <el-input type="textarea" v-model="form.content" autocomplete="off"></el-input>
+            <el-input type="textarea" v-model="form.content" rows="5" autocomplete="off"></el-input>
         </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -15,8 +15,9 @@
     <span slot="footer" class="dialog-footer">
         <el-button @click="requestAI">帮写</el-button>
     </span>
-    <div v-for="(o, index) in completion.content"
-        :key="`fruit-${index}`">
+    <div class="completion-item" v-for="(o, index) in completion"
+        @click="complete"
+        :key="`fr1uit-${index}`">
         {{o}}
     </div>
 </div>
@@ -57,14 +58,23 @@ export default {
             }
             xhr.send()
         },
+        getContext() {
+            return this.post.title + " "
+        },
         requestAI() {
+            console.log("fff")
             let xhr = new XMLHttpRequest()
             xhr.open("POST", "/api/storygen")
             xhr.onload = () =>{
-                this.completion = JSON.parse(xhr.response)
+                this.completion = JSON.parse(xhr.response).msg
                 console.log(this.completion)
             }
-            xhr.send(JSON.stringify({context:"我叫小明，正在上小学三年级"}))
+            xhr.send(JSON.stringify({context:this.getContext()+this.form.content}))
+        },
+        complete(e) {
+            console.log(e.target.innerText)
+            this.form.content += e.target.innerText
+            this.completion = []
         },
         submitReply() {
             if (this.form.content.length < 1) {
@@ -91,6 +101,10 @@ export default {
 </script>
 
 <style scoped>
+.maindiv {
+    max-width: 800px;
+    margin: auto;
+}
 .red {
     color: #ff0000;
 }
@@ -106,5 +120,13 @@ hr {
 .el-pagination{
     text-align: center; 
     padding-top: 1em;
+}
+.completion-item {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    cursor: pointer;
 }
 </style>
