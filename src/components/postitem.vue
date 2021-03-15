@@ -1,7 +1,8 @@
 <template>
 <div>
-    <h3>{{author}}</h3>
-    <div>{{content}}</div>
+    <div class="post-author">{{author}}</div>
+    <div class="post-time">{{time}}</div>
+    <div class="post-content">{{content}}</div>
 </div>
 </template>
 
@@ -16,6 +17,10 @@ export default {
         content: {
             type: String,
             default: () => "ID123"
+        },
+        time: {
+            type: String,
+            default: () => "unknown"
         },
     },
     components: {
@@ -49,5 +54,20 @@ hr {
 .el-pagination{
     text-align: center; 
     padding-top: 1em;
+}
+.post-author {
+    margin-top: 1em;
+    font-size: 1.1em;
+    line-height: 2em;
+    font-weight: bold;
+}
+.post-time {
+    font-size: 0.8em;
+    color: gray;
+}
+.post-content {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    
 }
 </style>

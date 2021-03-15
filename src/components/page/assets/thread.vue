@@ -1,8 +1,9 @@
 <template>
 <div class="maindiv">
-    <h2>{{post.title}}</h2>
+    <h2 class="thread-title">{{post.title}}</h2>
+    <hr/>
     <postitem v-for="(re, index) in post.content"
-        :key="`fruit-${index}`" :author="re[0]" :content="re[1]"/>
+        :key="`fruit-${index}`" :author="re[0]" :content="re[1]" :time="re[2]"/>
     <!-- reply -->
     <el-form :model="form">
         <el-form-item label="接着讲一段">
@@ -101,6 +102,9 @@ export default {
 </script>
 
 <style scoped>
+.thread-title {
+
+}
 .maindiv {
     max-width: 800px;
     margin: auto;

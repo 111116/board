@@ -97,5 +97,13 @@ hr {
     text-align: center; 
     padding-top: 1em;
 }
+a {
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    color: #3333cc;
+    letter-spacing: 0.2px;
+}
 
 </style>
