@@ -1,9 +1,8 @@
 <template>
 <div>
     <h2>{{post.title}}</h2>
-    <template v-for="(re, index) in post.content">
-        <postitem :key="`fruit-${index}`" :author="re[0]" :content="re[1]"/>
-    </template>
+    <postitem v-for="(re, index) in post.content"
+        :key="`fruit-${index}`" :author="re[0]" :content="re[1]"/>
     <!-- reply -->
     <el-form :model="form">
         <el-form-item label="接着讲一段">
@@ -13,6 +12,13 @@
     <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitReply">发布</el-button>
     </span>
+    <span slot="footer" class="dialog-footer">
+        <el-button @click="requestAI">帮写</el-button>
+    </span>
+    <div v-for="(o, index) in completion.content"
+        :key="`fruit-${index}`">
+        {{o}}
+    </div>
 </div>
 </template>
 
@@ -31,6 +37,7 @@ export default {
             },
             post: {},
             id: undefined,
+            completion: [],
         }
     },
     computed: {
@@ -50,6 +57,15 @@ export default {
             }
             xhr.send()
         },
+        requestAI() {
+            let xhr = new XMLHttpRequest()
+            xhr.open("POST", "/api/storygen")
+            xhr.onload = () =>{
+                this.completion = JSON.parse(xhr.response)
+                console.log(this.completion)
+            }
+            xhr.send(JSON.stringify({context:"我叫小明，正在上小学三年级"}))
+        },
         submitReply() {
             if (this.form.content.length < 1) {
                 this.$message.error("内容不能少于一个字")
@@ -61,7 +77,7 @@ export default {
             xhr.onload = (e)=>{
                 if (e.target.status == 200) {
                     this.$message.success("发布成功")
-                    this.$router.push('/')
+                    this.$router.go()
                 }
                 else {
                     console.error("edit failed", e.target.status)

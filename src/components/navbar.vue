@@ -76,6 +76,7 @@
     height: 60px;
     color: #fff;
     background-color: #333;
+    font-size: 1.1em;
 }
 .collapse-btn {
     float: left;
@@ -101,10 +102,14 @@
     padding-right: 20px;
 }
 .header .button {
+    font-size: 0.9em;
     float: left;
     line-height: 60px;
     text-align: left;
     cursor: pointer;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    color: white;
 }
 
 </style>

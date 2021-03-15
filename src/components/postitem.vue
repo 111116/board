@@ -1,6 +1,6 @@
 <template>
 <div>
-    <h2>{{author}}</h2>
+    <h3>{{author}}</h3>
     <div>{{content}}</div>
 </div>
 </template>
