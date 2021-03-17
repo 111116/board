@@ -1,9 +1,11 @@
 <template>
 <div class="maindiv">
     <h2 class="thread-title">{{post.title}}</h2>
+    <div class="category">{{post.category}}</div>
+    <div class="likes">{{post.likes}} likes</div>
     <hr/>
     <postitem v-for="(re, index) in post.content"
-        :key="`fruit-${index}`" :author="re[0]" :content="re[1]" :time="re[2]"/>
+        :key="`fruit-${index}`" :author="re.author.name" :content="re.content" :time="re.time"/>
     <!-- reply -->
     <el-form :model="form">
         <el-form-item label="接着讲一段">
