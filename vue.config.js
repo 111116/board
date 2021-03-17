@@ -15,5 +15,4 @@ module.exports = {
     'vue-echarts',
     'resize-detector'
   ],
-  publicPath: 'board',
 }

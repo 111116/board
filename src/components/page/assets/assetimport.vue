@@ -2,9 +2,8 @@
 <div>
     <h2>批量导入资产</h2>
     <el-upload
-        accept=".xlsx"
         drag
-        action="/api/assets/upload/"
+        action="/api/img/upload"
         :on-error="onerror"
         :on-success="onsuccess"
         :file-list="fileList"
@@ -17,13 +16,11 @@
 </template>
 
 <script>
-import commonQueries from "@/utils/commonqueries"
 export default {
     name: 'assetimport',
     components: {
     },
     beforeMount(){
-        commonQueries.checkOnline(this)
     },
     data(){
         return {
@@ -34,8 +31,9 @@ export default {
         onerror() {
             this.$message.error("上传失败，请检查表格格式是否正确，以及是否含有名称、分类、使用期限、初始价值字段")
         },
-        onsuccess() {
+        onsuccess(response) {
             this.$message.success("上传成功")
+            console.log(response)
         },
     },
     watch: {

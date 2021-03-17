@@ -6,8 +6,8 @@
         <el-container>
             <el-main>
                 <el-form>
-                    <el-form-item label="用户名">
-                        <el-input placeholder="请输入用户名" v-model="username"/>
+                    <el-form-item label="邮箱">
+                        <el-input placeholder="请输入邮箱" v-model="email"/>
                     </el-form-item>
                     <el-form-item label="密码">
                         <el-input placeholder="请输入密码" v-model="password" show-password @keyup.enter.native="login"/>
@@ -29,7 +29,7 @@ export default {
     },
     data(){
         return{
-            username: "",
+            email: "",
             password: "",
             success: false,
         }
@@ -37,7 +37,7 @@ export default {
     methods: {
         login: function(){
             let xhr = new XMLHttpRequest()
-            httpRequest.post(xhr, "/api/user/login", {username: this.username, password: this.password})
+            httpRequest.post(xhr, "/api/user/login", {email: this.email, password: this.password})
             xhr.onload = () => {this.checkstatus(xhr)}
         },
         checkstatus: function(xhr){

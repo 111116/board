@@ -45,7 +45,7 @@ export default {
     computed: {
     },
     beforeMount(){
-        this.id = this.$route.query.id
+        this.id = this.$route.params.id
         this.getPost()
     },
     methods:{

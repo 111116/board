@@ -6,8 +6,11 @@
         <el-container>
             <el-main>
                 <el-form>
-                    <el-form-item label="用户名">
-                        <el-input placeholder="请输入用户名" v-model="username"/>
+                    <el-form-item label="邮箱">
+                        <el-input placeholder="请输入邮箱" v-model="email"/>
+                    </el-form-item>
+                    <el-form-item label="昵称">
+                        <el-input placeholder="请输入昵称" v-model="name"/>
                     </el-form-item>
                     <el-form-item label="密码">
                         <el-input placeholder="请输入密码" v-model="password" show-password />
@@ -32,7 +35,8 @@ export default {
     },
     data(){
         return{
-            username: "",
+            name: "",
+            email: "",
             password: "",
             passwordrepeat: "",
             success: false,
@@ -40,8 +44,12 @@ export default {
     },
     methods: {
         signup: function(){
-            if (this.username.length<3) {
-                this.$message.error('用户名太短');
+            if (this.name.length<1) {
+                this.$message.error('昵称必须非空');
+                return;
+            }
+            if (this.email.length<1) {
+                this.$message.error('邮箱必须非空');
                 return;
             }
             if (this.password.length<6) {
@@ -53,7 +61,12 @@ export default {
                 return;
             }
             let xhr = new XMLHttpRequest()
-            httpRequest.post(xhr, "/api/user/create", {username: this.username, password: this.password})
+            httpRequest.post(xhr, "/api/user/create", {
+                name: this.name,
+                email: this.email,
+                password: this.password,
+                avatarurl: "/avatar1.jpeg"
+            })
             xhr.onload = () => {this.checkstatus(xhr)}
         },
         checkstatus: function(xhr){

@@ -10,7 +10,7 @@
             <el-card :body-style="{ padding: '0px' }" shadow="always">
                 <img src="/background.jpeg" class="card-image">
                 <div class="card-content">
-                    <a :href="`/thread?id=${o.id}`"><h3>{{o.title}}</h3></a>
+                    <a :href="`/thread/${o.id}`"><h3>{{o.title}}</h3></a>
                     <div v-for="(re,i) in o.content" :key="i">
                         {{re[1]}}
                     </div>

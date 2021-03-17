@@ -3,11 +3,13 @@ import VueRouter from 'vue-router'
 
 // pages
 import home from '@/components/home.vue'
+import profile from '@/components/page/profile.vue'
 import login from '@/components/page/login.vue'
 import signup from '@/components/page/signup.vue'
 import pagenotfound from '@/components/page/404.vue'
 
 import assetlist      from '@/components/page/assets/assetlist.vue'
+import assetimport      from '@/components/page/assets/assetimport.vue'
 import thread from '@/components/page/assets/thread.vue'
 import newstory from '@/components/page/assets/newstory.vue'
 
@@ -35,17 +37,25 @@ const routes = [
     component: home,
     children: [
       {
-        path: '/list',
+        path: 'list',
         component: assetlist,
       },
       {
-        path: 'thread',
+        path: 'thread/:id',
         component: thread,
       },
       {
         path: 'newstory',
         component: newstory,
-      }
+      },
+      {
+        path: 'assetimport',
+        component: assetimport,
+      },
+      {
+        path: 'profile/:id',
+        component: profile,
+      },
     ]
   },
   {
