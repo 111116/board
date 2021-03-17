@@ -1,17 +1,24 @@
 <!--login page-->
 <template>
-    <div class="text-center">
-        <img v-if="userAvatar" :src="userAvatar">
-        <el-button id="pick-avatar">上传图片</el-button>
-        <avatar-cropper
-            @uploaded="handleUploaded"
-            trigger="#pick-avatar"
-            upload-url="/api/img/upload" />
+    <div>
+        <div class="profile-id">#{{id}}</div>
+        <div class="profile-name">{{name}}</div>
+        <div class="profile-email">{{email}}</div>
+        <img class="profile-avatar" :src="avatarurl"/>
+        <div class="text-center">
+            <img v-if="userAvatar" :src="userAvatar">
+            <el-button id="pick-avatar">上传头像</el-button>
+            <avatar-cropper
+                @uploaded="handleUploaded"
+                trigger="#pick-avatar"
+                upload-url="/api/img/upload" />
+        </div>
     </div>
 </template>
 <script>
 // import httpRequest from "@/utils/communication"
 import AvatarCropper from "vue-avatar-cropper"
+import commonQueries from "@/utils/commonqueries"
 export default {
     name: 'profile',
     components: {
@@ -19,21 +26,49 @@ export default {
     },
     data(){
         return{
+            id: "",
             email: "",
+            name: "",
             password: "",
+            avatarurl: "/defaultavatar.png",
             success: false,
             userAvatar: undefined,
         }
+    },
+    beforeMount() {
+        this.id = commonQueries.getCookie("id")
+        let xhr = new XMLHttpRequest
+        xhr.open("GET","/api/user/info?userid="+this.id)
+        xhr.onload = ()=>{
+            let info = JSON.parse(xhr.responseText)
+            this.email = info.email
+            this.name = info.name
+            this.avatarurl = info.avatarurl
+        }
+        xhr.send()
     },
     methods: {
         handleUploaded(resp) {
             // this.userAvatar = resp.relative_url;
             console.log(resp)
+            this.avatarurl = "/api/img/filename?name=" + resp.filename
         }
     },
 }
 </script>
 
 <style scoped>
-
+.profile-id {
+    color: gray;
+}
+.profile-name {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.profile-email {
+}
+.profile-avatar {
+    height: 200px;
+    border-radius: 5%;
+}
 </style>
