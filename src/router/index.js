@@ -11,7 +11,7 @@ import pagenotfound from '@/components/page/404.vue'
 import list      from '@/components/page/list.vue'
 import assetimport      from '@/components/page/assets/assetimport.vue'
 import thread from '@/components/page/thread.vue'
-import newstory from '@/components/page/assets/newstory.vue'
+import newstory from '@/components/page/newstory.vue'
 
 import '@/assets/main.css'
 
