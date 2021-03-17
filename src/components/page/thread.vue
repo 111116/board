@@ -63,7 +63,6 @@ export default {
             return this.post.title + " "
         },
         requestAI() {
-            console.log("fff")
             let xhr = new XMLHttpRequest()
             xhr.open("POST", "/api/storygen")
             xhr.onload = () =>{

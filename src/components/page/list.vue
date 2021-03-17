@@ -11,9 +11,10 @@
                 <img src="/background.jpeg" class="card-image">
                 <div class="card-content">
                     <a :href="`/thread/${o.id}`"><h3>{{o.title}}</h3></a>
-                    <div v-for="(re,i) in o.content" :key="i">
-                        {{re[1]}}
-                    </div>
+                    <div>{{o.category}}</div>
+                    <div>{{o.author.name}}</div>
+                    <div>{{o.firstcontent}}</div>
+                    <div>{{o.likes}}</div>
                     <!-- <div class="bottom clearfix">
                         <time class="time">{{ currentDate }}</time>
                         <el-button type="text" class="button">Operating</el-button>

@@ -8,9 +8,9 @@ import login from '@/components/page/login.vue'
 import signup from '@/components/page/signup.vue'
 import pagenotfound from '@/components/page/404.vue'
 
-import assetlist      from '@/components/page/assets/assetlist.vue'
+import list      from '@/components/page/list.vue'
 import assetimport      from '@/components/page/assets/assetimport.vue'
-import thread from '@/components/page/assets/thread.vue'
+import thread from '@/components/page/thread.vue'
 import newstory from '@/components/page/assets/newstory.vue'
 
 import '@/assets/main.css'
@@ -38,7 +38,7 @@ const routes = [
     children: [
       {
         path: 'list',
-        component: assetlist,
+        component: list,
       },
       {
         path: 'thread/:id',
