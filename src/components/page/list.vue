@@ -8,13 +8,14 @@
         </el-input>
         <el-row v-for="(o, index) in posts" :key="index">
             <el-card :body-style="{ padding: '0px' }" shadow="always">
-                <img src="/background.jpeg" class="card-image">
+                <img :src="o.bkimg" class="card-image">
                 <div class="card-content">
                     <a :href="`/thread/${o.id}`"><h3>{{o.title}}</h3></a>
                     <div>{{o.category}}</div>
                     <div>{{o.author.name}}</div>
+                    <div>{{o["time updated"]}}</div>
                     <div>{{o.firstcontent}}</div>
-                    <div>{{o.likes}}</div>
+                    <div>{{o.likes}} likes</div>
                     <!-- <div class="bottom clearfix">
                         <time class="time">{{ currentDate }}</time>
                         <el-button type="text" class="button">Operating</el-button>
@@ -52,7 +53,7 @@ export default {
             console.log("fuck")
             xhr.open("GET", "/api/forum/listall")
             xhr.onload = () =>{
-                this.posts = JSON.parse(xhr.response)
+                this.posts = JSON.parse(xhr.response).reverse()
                 console.log(this.posts)
             }
             xhr.send()

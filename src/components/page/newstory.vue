@@ -41,6 +41,7 @@ export default {
                 title: "",
                 content: "",
                 category: "",
+                bkimg: "/background.jpeg",
             },
         }
     },
