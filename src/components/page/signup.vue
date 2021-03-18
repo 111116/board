@@ -1,37 +1,44 @@
 <!--signup page-->
 <template>
 <div class="signup-wrap">
-    <div class="signup-box">
-        <div class="signup-title">Storyboard</div>
-        <el-container>
-            <el-main>
-                <el-form>
-                    <el-form-item label="邮箱">
-                        <el-input placeholder="请输入邮箱" v-model="email"/>
-                    </el-form-item>
-                    <el-form-item label="昵称">
-                        <el-input placeholder="请输入昵称" v-model="name"/>
-                    </el-form-item>
-                    <el-form-item label="密码">
-                        <el-input placeholder="请输入密码" v-model="password" show-password />
-                    </el-form-item>
-                    <el-form-item label="密码确认">
-                        <el-input placeholder="请重复密码" v-model="passwordrepeat" show-password @keyup.enter.native="signup"/>
-                    </el-form-item>
-                </el-form>
-            </el-main>
-            <el-footer>
-                <el-button class="signup-button" v-on:click="signup">注册</el-button>
-            </el-footer>
-        </el-container>
+    <div class="signup-area">
+        <div class="signup-title">
+            <storyboardlogo color="#b3f"/>
+        </div>
+        <div class="signup-box">
+            <el-container>
+                <el-main>
+                    <el-form>
+                        <el-form-item label="邮箱">
+                            <el-input placeholder="请输入邮箱" v-model="email"/>
+                        </el-form-item>
+                        <el-form-item label="昵称">
+                            <el-input placeholder="请输入昵称" v-model="name"/>
+                        </el-form-item>
+                        <el-form-item label="密码">
+                            <el-input placeholder="请输入密码" v-model="password" show-password />
+                        </el-form-item>
+                        <el-form-item label="密码确认">
+                            <el-input placeholder="请重复密码" v-model="passwordrepeat" show-password @keyup.enter.native="signup"/>
+                        </el-form-item>
+                    </el-form>
+                </el-main>
+                <el-footer>
+                    <el-button class="signup-button" v-on:click="signup" type="primary">注册</el-button>
+                    <el-button class="login-button" v-on:click="login">已有账号？登录</el-button>
+                </el-footer>
+            </el-container>
+        </div>
     </div>
 </div>
 </template>
 <script>
 import httpRequest from "@/utils/communication"
+import storyboardlogo from "@/components/storyboardlogo"
 export default {
     name: 'signup',
     components: {
+        storyboardlogo,
     },
     data(){
         return{
@@ -69,6 +76,9 @@ export default {
             })
             xhr.onload = () => {this.checkstatus(xhr)}
         },
+        login() {
+            this.$router.push('/login')
+        },
         checkstatus: function(xhr){
             console.log(xhr.status)
             if (xhr.status == 200){
@@ -89,21 +99,24 @@ export default {
 
 <style scoped>
     .signup-wrap {
+        position: relative;
+        height: 100%;
+    }
+    .signup-area {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
     }
     .signup-box {
-        position: absolute;
-        left: 50%;
-        top: 50%;
         width: 400px;
-        margin: -190px 0 0 -175px;
         border-radius: 5px;
         border: #ddd 1px solid;
     }
     .signup-title {
         width: 100%;
-        line-height: 60px;
         text-align: center;
         font-size: 20px;
-        border-bottom: 1px solid #ddd;
     }
 </style>

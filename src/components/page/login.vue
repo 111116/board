@@ -1,31 +1,38 @@
 <!--login page-->
 <template>
 <div class="login-wrap">
-    <div class="login-box">
-        <div class="login-title">Storyboard</div>
-        <el-container>
-            <el-main>
-                <el-form>
-                    <el-form-item label="邮箱">
-                        <el-input placeholder="请输入邮箱" v-model="email"/>
-                    </el-form-item>
-                    <el-form-item label="密码">
-                        <el-input placeholder="请输入密码" v-model="password" show-password @keyup.enter.native="login"/>
-                    </el-form-item>
-                </el-form>
-            </el-main>
-            <el-footer>
-                <el-button class="login-button" v-on:click="login">登录</el-button>
-            </el-footer>
-        </el-container>
+    <div class="login-area">
+        <div class="login-title">
+            <storyboardlogo color="#b3f"/>
+        </div>
+        <div class="login-box">
+            <el-container>
+                <el-main>
+                    <el-form>
+                        <el-form-item label="邮箱">
+                            <el-input placeholder="请输入邮箱" v-model="email"/>
+                        </el-form-item>
+                        <el-form-item label="密码">
+                            <el-input placeholder="请输入密码" v-model="password" show-password @keyup.enter.native="login"/>
+                        </el-form-item>
+                    </el-form>
+                </el-main>
+                <el-footer>
+                    <el-button class="login-button" v-on:click="login" type="primary">登录</el-button>
+                    <el-button class="signup-button" v-on:click="signup">没有账号？注册一个</el-button>
+                </el-footer>
+            </el-container>
+        </div>
     </div>
 </div>
 </template>
 <script>
 import httpRequest from "@/utils/communication"
+import storyboardlogo from "@/components/storyboardlogo"
 export default {
     name: 'login',
     components: {
+        storyboardlogo,
     },
     data(){
         return{
@@ -39,6 +46,9 @@ export default {
             let xhr = new XMLHttpRequest()
             httpRequest.post(xhr, "/api/user/login", {email: this.email, password: this.password})
             xhr.onload = () => {this.checkstatus(xhr)}
+        },
+        signup() {
+            this.$router.push('/signup')
         },
         checkstatus: function(xhr){
             console.log(xhr.status)
@@ -60,21 +70,24 @@ export default {
 
 <style scoped>
     .login-wrap {
+        position: relative;
+        height: 100%;
+    }
+    .login-area {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
     }
     .login-box {
-        position: absolute;
-        left: 50%;
-        top: 50%;
         width: 400px;
-        margin: -190px 0 0 -175px;
         border-radius: 5px;
         border: #ddd 1px solid;
     }
     .login-title {
         width: 100%;
-        line-height: 60px;
         text-align: center;
         font-size: 20px;
-        border-bottom: 1px solid #ddd;
     }
 </style>
