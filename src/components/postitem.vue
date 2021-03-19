@@ -1,6 +1,7 @@
 <template>
-<div>
-    <div class="post-author">{{author}}</div>
+<div class="post-container">
+    <img class="post-avatar" :src="author.avatarurl"/>
+    <div class="post-author">{{author.name}}</div>
     <div class="post-time">{{time}}</div>
     <div class="post-content">{{content}}</div>
 </div>
@@ -11,8 +12,8 @@ export default {
     name: 'postitem',
     props: {
         author: {
-            type: String,
-            default: () => "Name"
+            type: Object,
+            default: () => {}
         },
         content: {
             type: String,
@@ -48,12 +49,19 @@ hr {
     color: #EBEEF5;
     background-color: #EBEEF5;
 }
-.cascade {
-    width: 100%;
+.post-container {
+    position: relative;
 }
 .el-pagination{
     text-align: center; 
     padding-top: 1em;
+}
+.post-avatar {
+    position: absolute;
+    left: -60px;
+    top: 5px;
+    height: 50px;
+    border-radius: 50%;
 }
 .post-author {
     margin-top: 1em;
@@ -68,6 +76,6 @@ hr {
 .post-content {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
-    
+    white-space: pre-wrap;
 }
 </style>

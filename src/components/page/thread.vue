@@ -1,27 +1,32 @@
 <template>
-<div class="maindiv">
-    <h2 class="thread-title">{{post.title}}</h2>
-    <div class="category">{{post.category}}</div>
-    <div class="likes">{{post.likes}} likes</div>
-    <hr/>
-    <postitem v-for="(re, index) in post.content"
-        :key="`fruit-${index}`" :author="re.author.name" :content="re.content" :time="re.time"/>
-    <!-- reply -->
-    <el-form :model="form">
-        <el-form-item label="接着讲一段">
-            <el-input type="textarea" v-model="form.content" rows="5" autocomplete="off"></el-input>
-        </el-form-item>
-    </el-form>
-    <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitReply">发布</el-button>
-    </span>
-    <span slot="footer" class="dialog-footer">
-        <el-button @click="requestAI">帮写</el-button>
-    </span>
-    <div class="completion-item" v-for="(o, index) in completion"
-        @click="complete"
-        :key="`fr1uit-${index}`">
-        {{o}}
+<div class="outer-container">
+    <div class="cover-container">
+        <img :src="post.bkimg"/>
+    </div>
+    <div class="maindiv">
+        <h2 class="thread-title">{{post.title}}</h2>
+        <div class="category">{{post.category}}</div>
+        <div class="likes">{{post.likes}} likes</div>
+        <hr/>
+        <postitem v-for="(re, index) in post.content"
+            :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time"/>
+        <!-- reply -->
+        <el-form :model="form">
+            <el-form-item label="接着讲一段">
+                <el-input type="textarea" v-model="form.content" rows="5" autocomplete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="submitReply">发布</el-button>
+        </span>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="requestAI">帮写</el-button>
+        </span>
+        <div class="completion-item" v-for="(o, index) in completion"
+            @click="complete"
+            :key="`fr1uit-${index}`">
+            {{o}}
+        </div>
     </div>
 </div>
 </template>
@@ -104,7 +109,16 @@ export default {
 
 <style scoped>
 .thread-title {
-
+}
+.outer-container {
+}
+.cover-container {
+    overflow: hidden;
+}
+.cover-container img {
+    width: 100%;
+    object-fit: cover;
+    max-height: 300px;
 }
 .maindiv {
     max-width: 800px;
@@ -118,9 +132,6 @@ hr {
     border: none;
     color: #EBEEF5;
     background-color: #EBEEF5;
-}
-.cascade {
-    width: 100%;
 }
 .el-pagination{
     text-align: center; 

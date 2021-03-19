@@ -11,9 +11,9 @@
                 <img :src="o.bkimg" class="card-image">
                 <div class="card-content">
                     <a :href="`/thread/${o.id}`"><h3>{{o.title}}</h3></a>
-                    <div>{{o.category}}</div>
-                    <div>{{o.author.name}}</div>
-                    <div>{{o["time updated"]}}</div>
+                    <span>{{o.author.name}}</span>
+                    <span>{{o.category}}</span>
+                    <span>{{o["time updated"]}}</span>
                     <div>{{o.firstcontent}}</div>
                     <div>{{o.likes}} likes</div>
                     <!-- <div class="bottom clearfix">

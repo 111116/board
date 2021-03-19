@@ -29,4 +29,7 @@ export default {
     .fuckingheader{
         padding: 0px;
     }
+    .content-box {
+        padding: 0px;
+    }
 </style>
