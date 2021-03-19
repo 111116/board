@@ -52,6 +52,20 @@ export default {
             // this.userAvatar = resp.relative_url;
             console.log(resp)
             this.avatarurl = "/api/img/filename?name=" + resp.filename
+            this.updateUserInfo()
+        },
+        updateUserInfo() {
+            let xhr = new XMLHttpRequest
+            xhr.open("POST","/api/user/update")
+            xhr.send(JSON.stringify({name: this.name, avatarurl: this.avatarurl}))
+            xhr.onload = (e)=>{
+                if (e.target.status == 200) {
+                    this.$message.success("编辑成功")
+                }
+                else {
+                    this.$message.error("编辑失败")
+                }
+            }
         }
     },
 }
