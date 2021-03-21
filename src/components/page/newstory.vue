@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="maindiv">
     <h2>创建故事</h2>
     <el-form :model="form">
         <el-form-item label="标题">
@@ -71,6 +71,10 @@ export default {
 </script>
 
 <style scoped>
+.maindiv {
+    max-width: 800px;
+    margin: auto;
+}
 .red {
     color: #ff0000;
 }

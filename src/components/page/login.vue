@@ -3,7 +3,7 @@
 <div class="login-wrap">
     <div class="login-area">
         <div class="login-title">
-            <storyboardlogo color="#b3f"/>
+            <storyboardlogo color="#a2a"/>
         </div>
         <div class="login-box">
             <el-container>

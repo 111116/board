@@ -89,7 +89,7 @@
     width: 100%;
     height: 60px;
     color: #fff;
-    background-color: #516;
+    background-color: #616;
     font-size: 1.1em;
 }
 .collapse-btn {

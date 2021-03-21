@@ -10,12 +10,17 @@
             <el-card :body-style="{ padding: '0px' }" shadow="always">
                 <img :src="o.bkimg" class="card-image">
                 <div class="card-content">
-                    <a :href="`/thread/${o.id}`"><h3>{{o.title}}</h3></a>
-                    <span>{{o.author.name}}</span>
-                    <span>{{o.category}}</span>
-                    <span>{{o["time updated"]}}</span>
-                    <div>{{o.firstcontent}}</div>
-                    <div>{{o.likes}} likes</div>
+                    <a :href="`/thread/${o.id}`"><h3 class="story-title">{{o.title}}</h3></a>
+                    <img class="author-avatar" :src="o.author.avatarurl"/>
+                    <div class="author-info">
+                        <span class="author-name">{{o.author.name}}</span>
+                        <span class="story-time">{{o["time updated"]}}</span>
+                    </div>
+                    <div class="story-info">
+                        <span class="story-category">{{o.category}}</span>
+                        <span class="story-likes">{{o.likes}}赞</span>
+                    </div>
+                    <div class="story-firstcontent">{{o.firstcontent}}</div>
                     <!-- <div class="bottom clearfix">
                         <time class="time">{{ currentDate }}</time>
                         <el-button type="text" class="button">Operating</el-button>
@@ -64,13 +69,12 @@ export default {
 
 <style scoped>
 .maindiv {
-    max-width: 800px;
+    width: 800px;
     margin: auto;
 }
 .el-card {
     height: 200px; 
     margin-top: 20px;   
-    margin-bottom: 20px;   
     position: relative;
 }
 .card-image {
@@ -81,10 +85,63 @@ export default {
 }
 .card-content {
     position: absolute;
+    line-height: 1.5em;
+    width: 480px;
     left: 315px;
 }
-.card-content a {
+.card-content h3 {
     width: 100%;
+    margin-top: 15px;
+    padding-bottom: 0px;
+}
+.story-firstcontent {
+    position: absolute;
+    top: 50px;
+    width: 470px;
+    height: 90px;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.author-avatar {
+    height: 35px;
+    position: absolute;
+    left: 0px;
+    top: 155px;
+    border-radius: 50%;
+}
+.author-info {
+    position: absolute;
+    left: 40px;
+    top: 160px;
+}
+.author-name {
+    font-size: 0.9em;
+    font-weight: bold;
+    padding-left: 5px;
+}
+.story-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.story-time {
+    color: gray;
+    padding-left: 10px;
+    font-size: 0.8em;
+}
+.story-info {
+    font-size: 0.9em;
+    position: absolute;
+    right: 10px;
+    top: 160px;
+}
+.story-category {
+    color: #555;
+    padding-right: 6px;
+}
+.story-likes {
+    color: #15a;
 }
 .red {
     color: #ff0000;

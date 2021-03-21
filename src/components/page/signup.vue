@@ -3,7 +3,7 @@
 <div class="signup-wrap">
     <div class="signup-area">
         <div class="signup-title">
-            <storyboardlogo color="#b3f"/>
+            <storyboardlogo color="#a2a"/>
         </div>
         <div class="signup-box">
             <el-container>
