@@ -161,8 +161,7 @@ a {
     color: black;
 }
 a:hover {
-    color: #3333cc;
-    letter-spacing: 0.2px;
+    color: #1144aa;
 }
 
 </style>
