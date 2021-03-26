@@ -80,7 +80,7 @@ export default {
                 this.completion = JSON.parse(xhr.response).msg
                 console.log(this.completion)
             }
-            xhr.send(JSON.stringify({context:this.getContext()+this.form.content}))
+            xhr.send(JSON.stringify({context:this.getContext()}))
         },
         complete(e) {
             console.log(e.target.innerText)
