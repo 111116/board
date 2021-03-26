@@ -67,7 +67,11 @@ export default {
             xhr.send()
         },
         getContext() {
-            return this.post.title + " " + this.form.content
+            let context = this.post.title + " "
+            for (let i=0; i<this.post.content.length; ++i)
+                context += this.post.content[i].content + " "
+            context += this.form.content
+            return context
         },
         requestAI() {
             let xhr = new XMLHttpRequest()
