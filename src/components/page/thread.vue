@@ -7,6 +7,7 @@
         <h2 class="thread-title">{{post.title}}</h2>
         <div class="category">{{post.category}}</div>
         <div class="likes">{{post.likes}} likes</div>
+        <el-button icon="el-icon-thumb" @click="likeit"/>
         <hr/>
         <postitem v-for="(re, index) in post.content"
             :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time"/>
@@ -86,6 +87,23 @@ export default {
             console.log(e.target.innerText)
             this.form.content += e.target.innerText
             this.completion = []
+        },
+        likeit() {
+            let xhr = new XMLHttpRequest
+            xhr.open("post","/api/thread/like")
+            xhr.send(JSON.stringify({id:this.id}))
+            xhr.onload = (e)=>{
+                if (e.target.status == 200) {
+                    // this.$message.success("发布成功")
+                    // this.$router.go()
+                    this.post.likes += 1
+                }
+                else {
+                    console.error("failed", e.target.status)
+                    this.$message.error("点赞失败")
+                }
+            }
+            xhr.onerror = ()=>{this.$message.error("点赞失败")}
         },
         submitReply() {
             if (this.form.content.length < 1) {
