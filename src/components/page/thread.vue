@@ -10,7 +10,7 @@
         <el-button icon="el-icon-thumb" @click="likeit"/>
         <hr/>
         <postitem v-for="(re, index) in post.content"
-            :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time"/>
+            :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time" :postid="index" :storyid="id"/>
         <!-- reply -->
         <el-form :model="form">
             <el-form-item label="接着讲一段">
@@ -53,7 +53,7 @@ export default {
     computed: {
     },
     beforeMount(){
-        this.id = this.$route.params.id
+        this.id = Number(this.$route.params.id)
         this.getPost()
     },
     methods:{
