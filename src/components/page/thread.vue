@@ -6,9 +6,8 @@
     <div class="maindiv">
         <h2 class="thread-title">{{post.title}}</h2>
         <div class="category">{{post.category}}</div>
-        <div class="likes">{{post.likes.length}} 赞 </div>
-        <el-button icon="el-icon-thumb" v-if="!likedByMe" @click="likeit"/>
-        <el-button icon="el-icon-thumb" v-if="likedByMe" style="color: #d6f;" @click="unlikeit"/>
+        <el-button icon="el-icon-thumb" v-if="!likedByMe" @click="likeit">{{post.likes.length}}</el-button>
+        <el-button icon="el-icon-thumb" v-if="likedByMe" style="color: #d6f;" @click="unlikeit">{{post.likes.length}}</el-button>
         <hr/>
         <postitem v-for="(re, index) in post.content"
             :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time" :postid="index" :storyid="id"/>
