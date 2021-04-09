@@ -22,12 +22,19 @@
             <el-button type="primary" @click="submitReply">发布</el-button>
         </span>
         <span slot="footer" class="dialog-footer">
-            <el-button @click="requestAI">帮写</el-button>
+            <el-button v-loading="completion_status==1" @click="requestAI">帮写</el-button>
         </span>
-        <div class="completion-item" v-for="(o, index) in completion"
-            @click="complete"
-            :key="`fr1uit-${index}`">
-            {{o}}
+        <div v-if="completion_status==2" class="completion-box-outer">
+            <div class="completion-hint">
+                帮写结果（单击以填入）
+            </div>
+            <div class="completion-box">
+                <div class="completion-item" v-for="(o, index) in completion"
+                    @click="complete"
+                    :key="`fr1uit-${index}`">
+                    {{o}}
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -52,6 +59,7 @@ export default {
             },
             id: undefined,
             completion: [],
+            completion_status: 0,
         }
     },
     computed: {
@@ -87,9 +95,11 @@ export default {
         requestAI() {
             let xhr = new XMLHttpRequest()
             xhr.open("POST", "/api/storygen")
+            this.completion_status=1
             xhr.onload = () =>{
                 this.completion = JSON.parse(xhr.response).msg
                 console.log(this.completion)
+                this.completion_status=2
             }
             xhr.send(JSON.stringify({context:this.getContext()}))
         },
@@ -97,6 +107,7 @@ export default {
             console.log(e.target.innerText)
             this.form.content += e.target.innerText
             this.completion = []
+            this.completion_status=0
         },
         likeit() {
             let xhr = new XMLHttpRequest
@@ -186,12 +197,25 @@ hr {
     text-align: center; 
     padding-top: 1em;
 }
-.completion-item {
+.completion-box-outer {
+    margin-top: 10px;
+}
+.completion-hint {
+    font-weight: bold;
+}
+.completion-box {
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 2px;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.completion-item {
+    border-bottom: 1px solid #ddd;
+    padding: 4px;
     cursor: pointer;
+}
+.completion-item:hover {
+    color: white;
+    background-color: #929;
 }
 </style>
