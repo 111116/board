@@ -18,7 +18,7 @@
                     </div>
                     <div class="story-info">
                         <span class="story-category">{{o.category}}</span>
-                        <span class="story-likes">{{o.likes}}赞</span>
+                        <span class="story-likes">{{o.likes.length}}赞</span>
                     </div>
                     <div class="story-firstcontent">{{o.firstcontent}}</div>
                     <!-- <div class="bottom clearfix">

@@ -6,8 +6,9 @@
     <div class="maindiv">
         <h2 class="thread-title">{{post.title}}</h2>
         <div class="category">{{post.category}}</div>
-        <div class="likes">{{post.likes}} likes</div>
-        <el-button icon="el-icon-thumb" @click="likeit"/>
+        <div class="likes">{{post.likes.length}} 赞 </div>
+        <el-button icon="el-icon-thumb" v-if="!likedByMe" @click="likeit"/>
+        <el-button icon="el-icon-thumb" v-if="likedByMe" style="color: #d6f;" @click="unlikeit"/>
         <hr/>
         <postitem v-for="(re, index) in post.content"
             :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time" :postid="index" :storyid="id"/>
@@ -35,6 +36,7 @@
 <script>
 import postitem from "@/components/postitem"
 // import httpRequest from "@/utils/communication"
+import commonQueries from "@/utils/commonqueries"
 export default {
     name: 'thread',
     components: {
@@ -45,12 +47,21 @@ export default {
             form: {
                 content: "",
             },
-            post: {},
+            post: {
+                likes: []
+            },
             id: undefined,
             completion: [],
         }
     },
     computed: {
+        likedByMe() {
+            let userid = commonQueries.getCookie("id")
+            for (let i=0; i<this.post.likes.length; ++i)
+                if (this.post.likes[i].id == userid)
+                    return true
+            return false
+        },
     },
     beforeMount(){
         this.id = Number(this.$route.params.id)
@@ -59,7 +70,6 @@ export default {
     methods:{
         getPost() {
             let xhr = new XMLHttpRequest()
-            console.log("fuck")
             xhr.open("GET", "/api/thread/read?id="+this.id)
             xhr.onload = () =>{
                 this.post = JSON.parse(xhr.response)
@@ -94,16 +104,33 @@ export default {
             xhr.send(JSON.stringify({id:this.id}))
             xhr.onload = (e)=>{
                 if (e.target.status == 200) {
-                    // this.$message.success("发布成功")
-                    // this.$router.go()
-                    this.post.likes += 1
+                    console.log(this.post.likes)
+                    this.post.likes.push({id:commonQueries.getCookie("id")})
                 }
                 else {
                     console.error("failed", e.target.status)
-                    this.$message.error("点赞失败")
+                    this.$message.warning("点赞失败")
                 }
             }
-            xhr.onerror = ()=>{this.$message.error("点赞失败")}
+            xhr.onerror = ()=>{this.$message.warning("点赞失败")}
+        },
+        unlikeit() {
+            let xhr = new XMLHttpRequest
+            xhr.open("post","/api/thread/unlike")
+            xhr.send(JSON.stringify({id:this.id}))
+            xhr.onload = (e)=>{
+                if (e.target.status == 200) {
+                    let userid = commonQueries.getCookie("id")
+                    for (let i=0; i<this.post.likes.length; ++i)
+                        if (this.post.likes[i].id == userid)
+                            this.post.likes.splice(i,1)
+                }
+                else {
+                    console.error("failed", e.target.status)
+                    this.$message.warning("取消点赞失败")
+                }
+            }
+            xhr.onerror = ()=>{this.$message.warning("取消点赞失败")}
         },
         submitReply() {
             if (this.form.content.length < 1) {
