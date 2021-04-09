@@ -36,6 +36,8 @@
                 </div>
             </div>
         </div>
+        <div v-if="completion_status!=2" style="height: 12em;"></div>
+        <div style="height: 5em;"></div>
     </div>
 </div>
 </template>

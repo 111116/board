@@ -1,10 +1,12 @@
 <template>
 <div class="post-container">
     <img class="post-avatar" :src="author.avatarurl"/>
-    <div class="post-author">{{author.name}}</div>
-    <div class="post-time">{{time}}</div>
+    <div class="bubble">
+        <div class="post-author">{{author.name}}</div>
+        <div class="post-time">{{time}}</div>
+        <div class="post-content">{{content}}</div>
+    </div>
     <div class="fork" @click="fork">fork</div>
-    <div class="post-content">{{content}}</div>
 </div>
 </template>
 
@@ -86,6 +88,8 @@ hr {
 }
 .post-container {
     position: relative;
+    margin-top: 16px;
+    margin-bottom: 16px;
 }
 .el-pagination{
     text-align: center; 
@@ -94,14 +98,21 @@ hr {
 .post-avatar {
     position: absolute;
     left: -60px;
-    top: 5px;
+    top: 2px;
     height: 50px;
     border-radius: 50%;
 }
+.bubble {
+    background-color: #eee;
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 12px;
+    color: #000;
+}
 .post-author {
-    margin-top: 1em;
-    font-size: 1.1em;
-    line-height: 2em;
     font-weight: bold;
 }
 .fork {
@@ -118,8 +129,10 @@ hr {
     color: gray;
 }
 .post-content {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    margin-top: 3px;
     white-space: pre-wrap;
+}
+p {
+  margin-bottom: 30px; /* between paragraphs */
 }
 </style>
