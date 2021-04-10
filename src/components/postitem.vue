@@ -3,10 +3,13 @@
     <img class="post-avatar" :src="author.avatarurl"/>
     <div class="bubble">
         <div class="post-author">{{author.name}}</div>
-        <div class="post-time">{{time}}</div>
         <div class="post-content">{{content}}</div>
+            <div class="post-time">{{time}}</div>
+        <div class="bottom">
+            <div class="comment" @click="comment">comments</div>
+            <div class="fork" @click="fork">fork</div>
+        </div>
     </div>
-    <div class="fork" @click="fork">fork</div>
 </div>
 </template>
 
@@ -71,6 +74,9 @@ export default {
                 }
                 xhr.onerror = ()=>{this.$message.error("创建分支失败")}
             })
+        },
+        comment() {
+
         }
     }
 }
@@ -106,7 +112,7 @@ hr {
     background-color: #eee;
     display: inline-block;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 7px;
     padding-left: 12px;
     padding-right: 12px;
     border-radius: 12px;
@@ -115,22 +121,39 @@ hr {
 .post-author {
     font-weight: bold;
 }
-.fork {
+.bottom {
     float: right;
+}
+.comment {
+    display: inline-block;
     font-size: 0.8em;
     color: #49d;
     cursor: pointer;
+    margin-left: 10px;
+}
+.comment:hover {
+    text-decoration: underline;
+}
+.fork {
+    display: inline-block;
+    font-size: 0.8em;
+    color: #49d;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.post-time {
+    display: inline-block;
+    font-size: 0.8em;
+    color: gray;
 }
 .fork:hover {
     text-decoration: underline;
 }
-.post-time {
-    font-size: 0.8em;
-    color: gray;
-}
 .post-content {
     margin-top: 3px;
+    margin-bottom: 3px;
     white-space: pre-wrap;
+    word-spacing: 0.25em;
 }
 p {
   margin-bottom: 30px; /* between paragraphs */

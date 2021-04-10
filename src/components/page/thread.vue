@@ -6,8 +6,8 @@
     <div class="maindiv">
         <h2 class="thread-title">{{post.title}}</h2>
         <div class="category">{{post.category}}</div>
-        <el-button icon="el-icon-thumb" v-if="!likedByMe" @click="likeit">{{post.likes.length}}</el-button>
-        <el-button icon="el-icon-thumb" v-if="likedByMe" style="color: #d6f;" @click="unlikeit">{{post.likes.length}}</el-button>
+        <el-button class="like-button" icon="el-icon-thumb" type="text" v-if="!likedByMe" @click="likeit">{{post.likes.length}}</el-button>
+        <el-button class="unlike-button" icon="el-icon-thumb" type="text" v-if="likedByMe" @click="unlikeit">{{post.likes.length}}</el-button>
         <hr/>
         <postitem v-for="(re, index) in post.content"
             :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time" :postid="index" :storyid="id"/>
@@ -170,6 +170,18 @@ export default {
 
 <style scoped>
 .thread-title {
+}
+.category {
+    display: inline-block;
+}
+.like-button {
+    display: inline-block;
+    padding-left: 10px;
+    color: #2c3e50;
+}
+.unlike-button {
+    display: inline-block;
+    padding-left: 10px;
 }
 .outer-container {
 }
