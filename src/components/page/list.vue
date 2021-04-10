@@ -1,11 +1,13 @@
 <template>
 <div class="maindiv">
     <h2>故事列表</h2>
-    <el-button @click="newstory">创建新故事</el-button>
     <div style="margin-top: 20px;">
-        <el-input placeholder="THIS DOESN'T WORK" v-model="searchinput">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-        </el-input>
+        <div style="position:relative;height: 40px;">
+            <el-input class="story-search" placeholder="THIS DOESN'T WORK" v-model="searchinput">
+                <el-button slot="append" icon="el-icon-search"></el-button>
+            </el-input>
+            <el-button class="newstory-button" icon="el-icon-plus" @click="newstory">创建新故事</el-button>
+        </div>
         <el-row v-for="(o, index) in posts" :key="index">
             <el-card :body-style="{ padding: '0px' }" shadow="always">
                 <img :src="o.bkimg" class="card-image">
@@ -66,16 +68,44 @@ export default {
     }
 }
 </script>
-
+<style>
+.el-input__inner {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.el-input-group__append {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+</style>
 <style scoped>
 .maindiv {
     width: 800px;
     margin: auto;
+    margin-bottom: 20px;
+}
+.story-search {
+    width: 80%;
+    height: 40px;
+    position: absolute;
+    top:0px;
+    left:0px;
+}
+.newstory-button {
+    margin-left: 2%;
+    width: 18%;
+    height: 40px;
+    position: absolute;
+    top:0px;
+    right: 0px;
+    border-radius: 12px;
 }
 .el-card {
     height: 200px; 
     margin-top: 20px;   
     position: relative;
+    border-radius: 10px;
+    border: 1px solid #ddd;
 }
 .card-image {
     height: 200px;
