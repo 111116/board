@@ -2,6 +2,7 @@
 <div class="outer-container">
     <div class="cover-container">
         <img :src="post.bkimg"/>
+        <el-upload type="text" action="/api/img/upload" class="el-icon-picture changecover" :on-success="handleUploadedCover"> 更换封面</el-upload>
     </div>
     <div class="maindiv">
         <h2 class="thread-title">{{post.title}}</h2>
@@ -92,6 +93,21 @@ export default {
                 context += this.post.content[i].content + " "
             context += this.form.content
             return context
+        },
+        handleUploadedCover(e) {
+            console.log(e)
+            let xhr = new XMLHttpRequest()
+            xhr.open("POST", "/api/thread/editimg")
+            xhr.send(JSON.stringify({imgsrc: "/api/img/filename?name=" + e.filename, story_id: this.id}))
+            xhr.onload = (e)=>{
+                if (e.target.status == 200) {
+                    this.$router.go()
+                }
+                else {
+                    this.$message.warning("更换封面失败")
+                }
+            }
+            e.filename
         },
         requestAI() {
             let xhr = new XMLHttpRequest()
@@ -187,6 +203,16 @@ export default {
 }
 .cover-container {
     overflow: hidden;
+    position: relative;
+}
+.changecover {
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0px 1px 4px rgba(0,0,0,0.5);
 }
 .cover-container img {
     width: 100%;
