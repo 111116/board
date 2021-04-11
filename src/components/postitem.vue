@@ -58,7 +58,7 @@ export default {
                 console.log("forking", this.storyid, this.postid)
                 let xhr = new XMLHttpRequest
                 xhr.open("post","/api/thread/fork")
-                xhr.send(JSON.stringify({story_id: this.storyid, message_id: this.postid+1}))
+                xhr.send(JSON.stringify({story_id: this.storyid, message_id: this.postid}))
                 xhr.onload = (e)=>{
                     if (e.target.status == 200) {
                         this.$message.success("创建分支成功")
