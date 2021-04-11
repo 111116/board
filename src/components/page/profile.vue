@@ -1,9 +1,12 @@
 <!--login page-->
 <template>
-    <div>
+    <div class="maindiv">
+        <br/>
+        <hr/>
         <div class="profile-id">#{{id}}</div>
         <div class="profile-name">{{name}}</div>
         <div class="profile-email">{{email}}</div>
+        <br/>
         <img class="profile-avatar" :src="avatarurl"/>
         <div class="text-center">
             <img v-if="userAvatar" :src="userAvatar">
@@ -72,11 +75,22 @@ export default {
 </script>
 
 <style scoped>
+
+hr {
+    height: 1px;
+    border: none;
+    color: #ddd;
+    background-color: #ddd;
+}
+.maindiv {
+    max-width: 800px;
+    margin: auto;
+}
 .profile-id {
     color: gray;
 }
 .profile-name {
-    font-size: 1.2em;
+    font-size: 1.5em;
     font-weight: bold;
 }
 .profile-email {
@@ -84,5 +98,6 @@ export default {
 .profile-avatar {
     height: 200px;
     border-radius: 5%;
+    border: 1px solid #ddd;
 }
 </style>

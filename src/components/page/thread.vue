@@ -5,7 +5,7 @@
         <el-upload type="text" action="/api/img/upload" class="el-icon-picture changecover" :on-success="handleUploadedCover"> 更换封面</el-upload>
     </div>
     <div class="maindiv">
-        <h2 class="thread-title">{{post.title}}</h2>
+        <h1 class="thread-title">{{post.title}}</h1>
         <div class="category">{{post.category}}</div>
         <el-button class="like-button" icon="el-icon-thumb" type="text" v-if="!likedByMe" @click="likeit">{{post.likes.length}}</el-button>
         <el-button class="unlike-button" icon="el-icon-thumb" type="text" v-if="likedByMe" @click="unlikeit">{{post.likes.length}}</el-button>
@@ -13,15 +13,14 @@
         <postitem v-for="(re, index) in post.content"
             :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time" :postid="index" :storyid="id"/>
         <!-- reply -->
+        <hr/>
         <el-form :model="form">
-            <el-form-item label="接着讲一段">
+            <el-form-item>
                 <el-input type="textarea" v-model="form.content" rows="5" autocomplete="off"></el-input>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button type="primary" @click="submitReply">发布</el-button>
-        </span>
-        <span slot="footer" class="dialog-footer">
             <el-button v-loading="completion_status==1" @click="requestAI">帮写</el-button>
         </span>
         <div v-if="completion_status==2" class="completion-box-outer">
@@ -186,6 +185,8 @@ export default {
 
 <style scoped>
 .thread-title {
+    font-size: 2em;
+    line-height: 3em;
 }
 .category {
     display: inline-block;
@@ -217,7 +218,7 @@ export default {
 .cover-container img {
     width: 100%;
     object-fit: cover;
-    max-height: 300px;
+    max-height: 400px;
 }
 .maindiv {
     max-width: 800px;
@@ -235,6 +236,15 @@ hr {
 .el-pagination{
     text-align: center; 
     padding-top: 1em;
+}
+form {
+    margin-top: 15px;
+}
+.dialog-footer button{
+    margin: 0px !important;
+}
+#wrap {
+    background-color: red;
 }
 .completion-box-outer {
     margin-top: 10px;
