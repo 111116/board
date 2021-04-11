@@ -2,7 +2,7 @@
 <div class="outer-container">
     <div class="cover-container">
         <img :src="post.bkimg"/>
-        <el-upload type="text" action="/api/img/upload" class="el-icon-picture changecover" :on-success="handleUploadedCover"> 更换封面</el-upload>
+        <el-upload type="text" v-if="loggedin" action="/api/img/upload" class="el-icon-picture changecover" :on-success="handleUploadedCover"> 更换封面</el-upload>
     </div>
     <div class="maindiv">
         <h1 class="thread-title">{{post.title}}</h1>
@@ -14,28 +14,33 @@
             :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time" :postid="index" :storyid="id"/>
         <!-- reply -->
         <hr/>
-        <el-form :model="form">
-            <el-form-item>
-                <el-input type="textarea" v-model="form.content" rows="5" autocomplete="off"></el-input>
-            </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="submitReply">发布</el-button>
-            <el-button v-loading="completion_status==1" @click="requestAI">帮写</el-button>
-        </span>
-        <div v-if="completion_status==2" class="completion-box-outer">
-            <div class="completion-hint">
-                帮写结果（单击以填入）
-            </div>
-            <div class="completion-box">
-                <div class="completion-item" v-for="(o, index) in completion"
-                    @click="complete"
-                    :key="`fr1uit-${index}`">
-                    {{o}}
+        <template v-if="loggedin">
+            <el-form :model="form">
+                <el-form-item>
+                    <el-input type="textarea" v-model="form.content" rows="5" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="submitReply">发布</el-button>
+                <el-button v-loading="completion_status==1" @click="requestAI">帮写</el-button>
+            </span>
+            <div v-if="completion_status==2" class="completion-box-outer">
+                <div class="completion-hint">
+                    帮写结果（单击以填入）
+                </div>
+                <div class="completion-box">
+                    <div class="completion-item" v-for="(o, index) in completion"
+                        @click="complete"
+                        :key="`fr1uit-${index}`">
+                        {{o}}
+                    </div>
                 </div>
             </div>
+            <div v-if="completion_status!=2" style="height: 12em;"></div>
+        </template>
+        <div class="el-icon-info" v-if="!loggedin" style="color:gray">
+            您还未登录，请先登录以续写故事或发表评论
         </div>
-        <div v-if="completion_status!=2" style="height: 12em;"></div>
         <div style="height: 5em;"></div>
     </div>
 </div>
@@ -71,6 +76,10 @@ export default {
                     return true
             return false
         },
+        loggedin() {
+            console.log(commonQueries.getCookie("id"))
+            return commonQueries.getCookie("id")!=""
+        }
     },
     beforeMount(){
         this.id = Number(this.$route.params.id)
@@ -240,14 +249,10 @@ hr {
 form {
     margin-top: 15px;
 }
-.dialog-footer button{
-    margin: 0px !important;
-}
-#wrap {
-    background-color: red;
+.dialog-footer {
 }
 .completion-box-outer {
-    margin-top: 10px;
+    margin-top: 18px;
 }
 .completion-hint {
     font-weight: bold;
