@@ -7,7 +7,7 @@
         </el-form-item>
         
         <el-form-item label="内容">
-            <el-input type="textarea" v-model="form.content" autocomplete="off"></el-input>
+            <el-input type="textarea" v-model="form.content" autocomplete="off" rows="5"></el-input>
         </el-form-item>
         <el-form-item label="分类">
             <el-select v-model="form.category" placeholder="Select">
@@ -48,6 +48,7 @@ export default {
     computed: {
     },
     beforeMount(){
+        this.getCategories()
     },
     methods:{
         submit() {
@@ -65,7 +66,16 @@ export default {
                 }
             }
             xhr.onerror = ()=>{this.$message.error("编辑失败")}
-        }
+        },
+        getCategories() {
+            let xhr = new XMLHttpRequest()
+            xhr.open("GET", "/api/forum/categories")
+            xhr.onload = () =>{
+                this.categories = JSON.parse(xhr.response)
+                console.log("Categories:", this.categories)
+            }
+            xhr.send()
+        },
     }
 }
 </script>
