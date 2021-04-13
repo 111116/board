@@ -10,6 +10,7 @@
         <el-button class="like-button" icon="el-icon-thumb" type="text" v-if="!likedByMe" @click="likeit">{{post.likes.length}}</el-button>
         <el-button class="unlike-button" icon="el-icon-thumb" type="text" v-if="likedByMe" @click="unlikeit">{{post.likes.length}}</el-button>
         <el-button type="text" icon="el-icon-cherry" class="story-fork" @click="branchlistVisible=true">{{post.fork_cnt.reduce((a,b)=>a+b)}} 显示分支列表</el-button>
+        <el-button type="text" icon="el-icon-download" class="story-export" @click="exportstory">导出故事文本</el-button>
         <hr/>
         <el-dialog title="分支剧情列表" :visible.sync="branchlistVisible">
             <el-table :data="post.branchlist">
@@ -200,6 +201,18 @@ export default {
                 }
             }
             xhr.onerror = ()=>{this.$message.error("发布失败")}
+        },
+        exportstory() {
+            let text = this.post.title
+            for (let i=0; i<this.post.content.length; ++i)
+                text += "\n\n" + this.post.content[i].content
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', "story"+this.post.id+".txt");
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
         }
     }
 }
@@ -223,6 +236,10 @@ export default {
     padding-left: 10px;
 }
 .story-fork {
+    color: #2c3e50;
+    font-weight: normal;
+}
+.story-export {
     color: #2c3e50;
     font-weight: normal;
 }
