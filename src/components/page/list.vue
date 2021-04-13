@@ -21,7 +21,7 @@
                     <div class="story-info">
                         <span class="story-category">{{o.category}}</span>
                         <el-button type="text" icon="el-icon-thumb" class="story-likes">{{o.likes.length}}</el-button>
-                        <el-button type="text" icon="el-icon-cherry" class="story-forks">{{o.fork_cnt.reduce((a,b)=>a+b)}}</el-button>
+                        <el-button type="text" icon="el-icon-cherry" class="story-forks">{{o.branch_cnt}}</el-button>
                     </div>
                     <div class="story-firstcontent">{{o.firstcontent}}</div>
                     <!-- <div class="bottom clearfix">

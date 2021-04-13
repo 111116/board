@@ -9,7 +9,7 @@
         <div class="category">{{post.category}}</div>
         <el-button class="like-button" icon="el-icon-thumb" type="text" v-if="!likedByMe" @click="likeit">{{post.likes.length}}</el-button>
         <el-button class="unlike-button" icon="el-icon-thumb" type="text" v-if="likedByMe" @click="unlikeit">{{post.likes.length}}</el-button>
-        <el-button type="text" icon="el-icon-cherry" class="story-fork" @click="branchlistVisible=true">{{post.fork_cnt.reduce((a,b)=>a+b)}} 显示分支列表</el-button>
+        <el-button type="text" icon="el-icon-cherry" class="story-fork" @click="branchlistVisible=true">{{post.branchlist.length}} 显示分支列表</el-button>
         <el-button type="text" icon="el-icon-download" class="story-export" @click="exportstory">导出故事文本</el-button>
         <hr/>
         <el-dialog title="分支剧情列表" :visible.sync="branchlistVisible">
