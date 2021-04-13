@@ -6,6 +6,7 @@
     </div>
     <div class="maindiv">
         <h1 class="thread-title">{{post.title}}</h1>
+        <div class="el-icon-cherry current-branch"> {{post.branchname}}</div>
         <div class="category">{{post.category}}</div>
         <el-button class="like-button" icon="el-icon-thumb" type="text" v-if="!likedByMe" @click="likeit">{{post.likes.length}}</el-button>
         <el-button class="unlike-button" icon="el-icon-thumb" type="text" v-if="likedByMe" @click="unlikeit">{{post.likes.length}}</el-button>
@@ -18,7 +19,8 @@
                 <el-table-column property="branchname" label="分支名称"></el-table-column>
                 <el-table-column label="跳转到分支">
                     <template slot-scope="scope">
-                        <a :href="'/thread/'+scope.row.id">跳转链接</a>
+                        <a v-if="scope.row.id!=post.id" :href="'/thread/'+scope.row.id">跳转链接</a>
+                        <span v-if="scope.row.id==post.id">当前分支</span>
                     </template>
                 </el-table-column>
             </el-table>
@@ -223,6 +225,11 @@ export default {
 .thread-title {
     font-size: 2em;
     line-height: 3em;
+    margin-bottom: 0px;
+}
+.current-branch {
+    display: block;
+    margin-bottom: 1em;
 }
 .category {
     display: inline-block;

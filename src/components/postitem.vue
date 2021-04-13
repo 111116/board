@@ -107,7 +107,7 @@ export default {
             this.branchloading = true
             xhr.open("GET", "/api/thread/getbranch?story_id="+this.storyid+"&message_id="+this.postid)
             xhr.onload = () =>{
-                this.branchlist = JSON.parse(xhr.response)
+                this.branchlist = JSON.parse(xhr.response).filter((o)=>(o.story!=this.storyid))
                 this.branchloading = false
                 console.log(this.post)
             }
