@@ -8,15 +8,26 @@
             </el-input>
             <el-button class="newstory-button" icon="el-icon-plus" @click="newstory">创建新故事</el-button>
         </div>
-        <el-menu default-active="0" class="category-menu" mode="horizontal" @select="handleCategorySelect">
-            <el-menu-item class="category" index="0">全部分类</el-menu-item>
-            <el-menu-item v-for="(o,index) in categories" class="category" :index="String(index+1)" :key="'cat'+index">
+        <el-menu default-active="all" class="category-menu" mode="horizontal" @select="handleCategorySelect">
+            <el-menu-item class="category" index="all">全部分类</el-menu-item>
+            <el-menu-item v-for="(o,index) in categories" class="category" :index="o" :key="'cat'+index">
                 {{o}}
             </el-menu-item>
             <el-menu-item class="category" index="plus">
-                <el-button type="text" icon="el-icon-plus" size="mini"></el-button>
+                <el-button type="text" icon="el-icon-plus" size="mini" @click="dialogVisible=true"></el-button>
             </el-menu-item>
         </el-menu>
+        <el-dialog title="添加故事分类" :visible.sync="dialogVisible">
+            <el-form>
+                <el-form-item label="分类名">
+                    <el-input v-model="newcategoryname" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible=false">取消</el-button>
+                <el-button type="primary" @click="dialogVisible=false;newcategory()">创建分类</el-button>
+            </span>
+        </el-dialog>
         <el-row v-for="(o, index) in posts" :key="index">
             <el-card :body-style="{ padding: '0px' }" shadow="always">
                 <img :src="o.bkimg" class="card-image">
@@ -55,21 +66,23 @@ export default {
             searchinput: "",
             posts: [],
             categories: [],
+            newcategoryname: "",
+            dialogVisible: false,
         }
     },
     computed: {
     },
     beforeMount(){
-        this.getPosts()
+        this.getPosts("all")
         this.getCategories()
     },
     methods:{
         newstory() {
             this.$router.push('/newstory')
         },
-        getPosts() {
+        getPosts(category) {
             let xhr = new XMLHttpRequest()
-            xhr.open("GET", "/api/forum/listall")
+            xhr.open("GET", category=="all"? "/api/forum/listall": "/api/forum/listcategory?category="+category)
             xhr.onload = () =>{
                 this.posts = JSON.parse(xhr.response).reverse()
                 console.log("POSTS:", this.posts)
@@ -77,10 +90,20 @@ export default {
             xhr.send()
         },
         handleCategorySelect(e) {
-            console.log("select",e)
+            if (e=="plus") {
+                1+1 // do nothing
+            }
+            else {
+                this.getPosts(e)
+            }
         },
         newcategory() {
-
+            let xhr = new XMLHttpRequest()
+            xhr.open("POST", "/api/forum/addcategory")
+            xhr.onload = () =>{
+                this.getCategories()
+            }
+            xhr.send(JSON.stringify({category:this.newcategoryname}))
         },
         getCategories() {
             let xhr = new XMLHttpRequest()
