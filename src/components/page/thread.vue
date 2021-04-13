@@ -193,7 +193,8 @@ export default {
             xhr.onload = (e)=>{
                 if (e.target.status == 200) {
                     this.$message.success("发布成功")
-                    this.$router.go()
+                    this.getPost()
+                    this.form.content = ""
                 }
                 else {
                     console.error("edit failed", e.target.status)
