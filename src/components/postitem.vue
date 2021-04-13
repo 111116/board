@@ -16,7 +16,7 @@
             <el-table-column property="branchname" label="分支名称"></el-table-column>
             <el-table-column label="跳转到分支">
                 <template slot-scope="scope">
-                    <a :href="'/thread/'+scope.row.id">跳转链接</a>
+                    <a :href="'/thread/'+scope.row.story">跳转链接</a>
                 </template>
             </el-table-column>
         </el-table>
