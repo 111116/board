@@ -6,10 +6,21 @@
         <div class="post-content">{{content}}</div>
             <div class="post-time">{{time}}</div>
         <div class="bottom">
-            <div class="comment" @click="comment">comments</div>
-            <div class="fork" @click="fork">fork</div>
+            <div class="comment" @click="comment">0 评论</div>
+            <div class="fork" @click="dialogVisible = true">{{forkcnt}} 分支</div>
         </div>
     </div>
+    <el-dialog title="分支剧情" :visible.sync="dialogVisible">
+        <el-form>
+            <el-form-item label="新分支名称">
+                <el-input v-model="branchname" autocomplete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible=false">取消</el-button>
+            <el-button type="primary" @click="dialogVisible=false;fork()">创建分支</el-button>
+        </span>
+    </el-dialog>
 </div>
 </template>
 
@@ -37,11 +48,17 @@ export default {
             type: Number,
             default: () => -1
         },
+        forkcnt: {
+            type: Number,
+            default: () => -1
+        }
     },
     components: {
     },
     data(){
         return {
+            dialogVisible: false,
+            branchname: "",
         }
     },
     computed: {
@@ -50,30 +67,28 @@ export default {
     },
     methods:{
         fork() {
-            this.$confirm('你将要从此处分支剧情，并创建一个新的续写故事。是否继续？', '创建故事分支', {
-                confirmButtonText: '创建分支',
-                cancelButtonText: '取消',
-                type: 'info'
-            }).then(() => {
-                console.log("forking", this.storyid, this.postid)
-                let xhr = new XMLHttpRequest
-                xhr.open("post","/api/thread/fork")
-                xhr.send(JSON.stringify({story_id: this.storyid, message_id: this.postid}))
-                xhr.onload = (e)=>{
-                    if (e.target.status == 200) {
-                        this.$message.success("创建分支成功")
-                        let resp = JSON.parse(e.target.response)
-                        console.log(resp.id)
-                        this.$router.push("/thread/"+resp.id)
-                        this.$router.go()
-                    }
-                    else {
-                        console.error("failed", e.target.status)
-                        this.$message.error("创建分支失败")
-                    }
+            console.log("forking", this.storyid, this.postid)
+            let xhr = new XMLHttpRequest
+            xhr.open("post","/api/thread/branch")
+            xhr.send(JSON.stringify({
+                story_id: this.storyid,
+                message_id: this.postid,
+                branch_name: this.branchname,
+            }))
+            xhr.onload = (e)=>{
+                if (e.target.status == 200) {
+                    this.$message.success("创建分支成功")
+                    let resp = JSON.parse(e.target.response)
+                    console.log(resp.id)
+                    this.$router.push("/thread/"+resp.id)
+                    this.$router.go()
                 }
-                xhr.onerror = ()=>{this.$message.error("创建分支失败")}
-            })
+                else {
+                    console.error("failed", e.target.status)
+                    this.$message.error("创建分支失败")
+                }
+            }
+            xhr.onerror = ()=>{this.$message.error("创建分支失败")}
         },
         comment() {
 

@@ -9,9 +9,10 @@
         <div class="category">{{post.category}}</div>
         <el-button class="like-button" icon="el-icon-thumb" type="text" v-if="!likedByMe" @click="likeit">{{post.likes.length}}</el-button>
         <el-button class="unlike-button" icon="el-icon-thumb" type="text" v-if="likedByMe" @click="unlikeit">{{post.likes.length}}</el-button>
+        <el-button type="text" icon="el-icon-cherry" class="story-fork">{{post.fork_cnt.reduce((a,b)=>a+b)}}</el-button>
         <hr/>
         <postitem v-for="(re, index) in post.content"
-            :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time" :postid="index" :storyid="id"/>
+            :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time" :postid="index" :storyid="id" :forkcnt="post.fork_cnt[index]"/>
         <!-- reply -->
         <hr/>
         <template v-if="loggedin">
@@ -208,6 +209,9 @@ export default {
 .unlike-button {
     display: inline-block;
     padding-left: 10px;
+}
+.story-fork {
+    color: #2c3e50;
 }
 .outer-container {
 }
