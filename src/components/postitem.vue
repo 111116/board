@@ -7,10 +7,20 @@
             <div class="post-time">{{time}}</div>
         <div class="bottom">
             <div class="comment" @click="comment">0 评论</div>
-            <div class="fork" @click="dialogVisible = true">{{forkcnt}} 分支</div>
+            <div class="fork" @click="dialogVisible=true;getBranch()">{{forkcnt}} 分支</div>
         </div>
     </div>
     <el-dialog title="分支剧情" :visible.sync="dialogVisible">
+        <el-table :data="branchlist" v-loading="branchloading">
+            <el-table-column property="author.name" label="分支作者"></el-table-column>
+            <el-table-column property="branchname" label="分支名称"></el-table-column>
+            <el-table-column label="跳转到分支">
+                <template slot-scope="scope">
+                    <a :href="'/thread/'+scope.row.id">跳转链接</a>
+                </template>
+            </el-table-column>
+        </el-table>
+        <br/>
         <el-form>
             <el-form-item label="新分支名称">
                 <el-input v-model="branchname" autocomplete="off"></el-input>
@@ -59,6 +69,8 @@ export default {
         return {
             dialogVisible: false,
             branchname: "",
+            branchlist: [],
+            branchloading: false,
         }
     },
     computed: {
@@ -89,6 +101,17 @@ export default {
                 }
             }
             xhr.onerror = ()=>{this.$message.error("创建分支失败")}
+        },
+        getBranch() {
+            let xhr = new XMLHttpRequest()
+            this.branchloading = true
+            xhr.open("GET", "/api/thread/getbranch?story_id="+this.storyid+"&message_id="+this.postid)
+            xhr.onload = () =>{
+                this.branchlist = JSON.parse(xhr.response)
+                this.branchloading = false
+                console.log(this.post)
+            }
+            xhr.send()
         },
         comment() {
 
