@@ -262,7 +262,7 @@ export default {
 .cover-container img {
     width: 100%;
     object-fit: cover;
-    max-height: 400px;
+    height: 400px;
 }
 .maindiv {
     max-width: 800px;
