@@ -9,8 +9,19 @@
         <div class="category">{{post.category}}</div>
         <el-button class="like-button" icon="el-icon-thumb" type="text" v-if="!likedByMe" @click="likeit">{{post.likes.length}}</el-button>
         <el-button class="unlike-button" icon="el-icon-thumb" type="text" v-if="likedByMe" @click="unlikeit">{{post.likes.length}}</el-button>
-        <el-button type="text" icon="el-icon-cherry" class="story-fork">{{post.fork_cnt.reduce((a,b)=>a+b)}}</el-button>
+        <el-button type="text" icon="el-icon-cherry" class="story-fork" @click="branchlistVisible=true">{{post.fork_cnt.reduce((a,b)=>a+b)}} 显示分支列表</el-button>
         <hr/>
+        <el-dialog title="分支剧情列表" :visible.sync="branchlistVisible">
+            <el-table :data="post.branchlist">
+                <el-table-column property="author.name" label="分支作者"></el-table-column>
+                <el-table-column property="branchname" label="分支名称"></el-table-column>
+                <el-table-column label="跳转到分支">
+                    <template slot-scope="scope">
+                        <a :href="'/thread/'+scope.row.id">跳转链接</a>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-dialog>
         <postitem v-for="(re, index) in post.content"
             :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time" :postid="index" :storyid="id" :forkcnt="post.fork_cnt[index]"/>
         <!-- reply -->
@@ -67,6 +78,7 @@ export default {
             id: undefined,
             completion: [],
             completion_status: 0,
+            branchlistVisible: false,
         }
     },
     computed: {
@@ -212,6 +224,7 @@ export default {
 }
 .story-fork {
     color: #2c3e50;
+    font-weight: normal;
 }
 .outer-container {
 }
