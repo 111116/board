@@ -8,6 +8,15 @@
             </el-input>
             <el-button class="newstory-button" icon="el-icon-plus" @click="newstory">创建新故事</el-button>
         </div>
+        <el-menu default-active="0" class="category-menu" mode="horizontal" @select="handleCategorySelect">
+            <el-menu-item class="category" index="0">全部分类</el-menu-item>
+            <el-menu-item v-for="(o,index) in categories" class="category" :index="String(index+1)" :key="'cat'+index">
+                {{o}}
+            </el-menu-item>
+            <el-menu-item class="category" index="plus">
+                <el-button type="text" icon="el-icon-plus" size="mini"></el-button>
+            </el-menu-item>
+        </el-menu>
         <el-row v-for="(o, index) in posts" :key="index">
             <el-card :body-style="{ padding: '0px' }" shadow="always">
                 <img :src="o.bkimg" class="card-image">
@@ -45,12 +54,14 @@ export default {
         return {
             searchinput: "",
             posts: [],
+            categories: [],
         }
     },
     computed: {
     },
     beforeMount(){
         this.getPosts()
+        this.getCategories()
     },
     methods:{
         newstory() {
@@ -58,14 +69,28 @@ export default {
         },
         getPosts() {
             let xhr = new XMLHttpRequest()
-            console.log("fuck")
             xhr.open("GET", "/api/forum/listall")
             xhr.onload = () =>{
                 this.posts = JSON.parse(xhr.response).reverse()
-                console.log(this.posts)
+                console.log("POSTS:", this.posts)
             }
             xhr.send()
         },
+        handleCategorySelect(e) {
+            console.log("select",e)
+        },
+        newcategory() {
+
+        },
+        getCategories() {
+            let xhr = new XMLHttpRequest()
+            xhr.open("GET", "/api/forum/categories")
+            xhr.onload = () =>{
+                this.categories = JSON.parse(xhr.response)
+                console.log("Categories:", this.categories)
+            }
+            xhr.send()
+        }
     }
 }
 </script>
@@ -100,6 +125,12 @@ export default {
     top:0px;
     right: 0px;
     border-radius: 12px;
+}
+.category-menu {
+    height: 50px;
+}
+.category {
+    height: 50px;
 }
 .el-card {
     height: 200px; 
