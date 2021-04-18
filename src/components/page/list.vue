@@ -29,7 +29,7 @@
             </span>
         </el-dialog>
         <el-row v-for="(o, index) in posts" :key="index">
-            <el-card :body-style="{ padding: '0px' }" shadow="always">
+            <el-card class="card3d" :body-style="{ padding: '0px' }" shadow="always" @mousemove.native="movehandler" @mouseleave.native="leavehandler" @mouseenter.native="enterhandler">
                 <img :src="o.bkimg" class="card-image">
                 <div class="card-content">
                     <a :href="`/thread/${o.id}`"><h3 class="story-title">{{o.title}}</h3></a>
@@ -77,6 +77,32 @@ export default {
         this.getCategories()
     },
     methods:{
+        enterhandler(e) {
+            let card = e.target
+            while (!card.classList.contains("card3d"))
+                card = card.parentElement;
+            card.style.transition = "0.2s ease-out";
+            setTimeout(function(){card.style.transition="0ms"}, 400);
+        },
+        movehandler(e) {
+            let card = e.target
+            while (!card.classList.contains("card3d"))
+                card = card.parentElement;
+            let rect = card.getBoundingClientRect()
+            var x = e.clientX - rect.left;
+            var y = e.clientY - rect.top;
+            y = y / rect.height - 0.5;
+            x = x / rect.width - 0.5;
+            card.style.transform = "perspective(1000px) rotateX(" + y*20 + "deg) rotateY(" + (-x*10) + "deg) scale3d(1.05, 1.05, 1.05)";
+        },
+        leavehandler(e) {
+            let card = e.target
+            while (!card.classList.contains("card3d"))
+                card = card.parentElement
+            card.style.transform = "none"
+            card.style.transition = "0.2s ease-out";
+            setTimeout(function(){card.style.transition="0ms"}, 400);
+        },
         newstory() {
             this.$router.push('/newstory')
         },
@@ -139,6 +165,11 @@ export default {
     position: absolute;
     top:0px;
     left:0px;
+}
+.card3d {
+    will-change: transform;
+    transform: none;
+    transition: 0ms;
 }
 .newstory-button {
     margin-left: 2%;
