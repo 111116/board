@@ -93,7 +93,7 @@ export default {
             var y = e.clientY - rect.top;
             y = y / rect.height - 0.5;
             x = x / rect.width - 0.5;
-            card.style.transform = "perspective(1000px) rotateX(" + y*20 + "deg) rotateY(" + (-x*10) + "deg) scale3d(1.05, 1.05, 1.05)";
+            card.style.transform = "perspective(1000px) rotateX(" + y*25 + "deg) rotateY(" + (-x*15) + "deg) scale3d(1.1, 1.1, 1.1)";
         },
         leavehandler(e) {
             let card = e.target
