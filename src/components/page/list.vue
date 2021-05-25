@@ -262,10 +262,12 @@ export default {
 .story-likes {
     color: #16b;
     padding: 0px !important;
+    cursor: default;
 }
 .story-forks {
     color: #16b;
     padding: 0px !important;
+    cursor: default;
 }
 .red {
     color: #ff0000;
