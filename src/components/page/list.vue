@@ -2,10 +2,13 @@
 <div class="maindiv">
     <h2>故事列表</h2>
     <div style="margin-top: 20px;">
+        <div class="announcement">
+            📢📢📢 第一次使用本站请看<a href="/help" style="font-weight: bold;">使用说明</a> 📢📢📢
+        </div>
         <div style="position:relative;height: 40px;">
-            <el-input class="story-search" placeholder="THIS DOESN'T WORK" v-model="searchinput">
+            <!-- <el-input class="story-search" placeholder="THIS DOESN'T WORK" v-model="searchinput">
                 <el-button slot="append" icon="el-icon-search"></el-button>
-            </el-input>
+            </el-input> -->
             <el-button class="newstory-button" icon="el-icon-plus" @click="newstory">创建新故事</el-button>
         </div>
         <el-menu default-active="all" class="category-menu" mode="horizontal" @select="handleCategorySelect">
@@ -172,10 +175,10 @@ export default {
     transition: 0ms;
 }
 .newstory-button {
-    margin-left: 2%;
     width: 18%;
     height: 40px;
-    position: absolute;
+    /*margin-left: 2%;*/
+    /*position: absolute;*/
     top:0px;
     right: 0px;
     border-radius: 12px;
@@ -285,4 +288,13 @@ a:hover {
     color: #1144aa;
 }
 
+.announcement {
+  width: 100%;
+  border-radius: 4px;
+  background: #ecf;
+  padding-left: 6px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-bottom: 8px;
+}
 </style>
