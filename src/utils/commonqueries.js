@@ -43,6 +43,15 @@ const commonQueries = {
         var cookiestring=RegExp(cookiename+"=[^;]+").exec(document.cookie);
         // Return everything after the equal sign, or an empty string if the cookie name not found
         return decodeURIComponent(cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : "");
+    },
+    getErrorMsg(xhr)
+    {
+        try {
+            return JSON.parse(xhr.responseText).msg || ""
+        }
+        catch (e) {
+            return ""
+        }
     }
 }
 

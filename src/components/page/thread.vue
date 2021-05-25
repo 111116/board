@@ -200,10 +200,10 @@ export default {
                 }
                 else {
                     console.error("edit failed", e.target.status)
-                    this.$message.error("发布失败")
+                    this.$message.error("发布失败！" + commonQueries.getErrorMsg(xhr))
                 }
             }
-            xhr.onerror = ()=>{this.$message.error("发布失败")}
+            xhr.onerror = ()=>{this.$message.error("发布失败！" + commonQueries.getErrorMsg(xhr))}
         },
         exportstory() {
             let text = this.post.title

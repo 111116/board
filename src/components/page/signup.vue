@@ -35,6 +35,7 @@
 <script>
 import httpRequest from "@/utils/communication"
 import storyboardlogo from "@/components/storyboardlogo"
+import commonQueries from "@/utils/commonqueries"
 export default {
     name: 'signup',
     components: {
@@ -85,12 +86,8 @@ export default {
                 this.success = true
                 this.$message.success('注册成功');
                 this.$router.push('/login')
-            }else if (xhr.status == 401){
-                this.$message.error('用户名或密码错误！');
-            }else if (xhr.status == 500){
-                this.$message.error('服务器内部错误！');
-            }else {
-                this.$message.error('发生了未知错误！');
+            } else {
+                this.$message.error('错误！' + commonQueries.getErrorMsg(xhr));
             }
         }
     },

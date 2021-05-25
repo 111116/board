@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import commonQueries from "@/utils/commonqueries"
 export default {
     name: 'postitem',
     props: {
@@ -97,10 +98,10 @@ export default {
                 }
                 else {
                     console.error("failed", e.target.status)
-                    this.$message.error("创建分支失败")
+                    this.$message.error("创建分支失败！" + commonQueries.getErrorMsg(xhr))
                 }
             }
-            xhr.onerror = ()=>{this.$message.error("创建分支失败")}
+            xhr.onerror = ()=>{this.$message.error("创建分支失败！" + commonQueries.getErrorMsg(xhr))}
         },
         getBranch() {
             let xhr = new XMLHttpRequest()

@@ -29,6 +29,7 @@
 
 <script>
 // import httpRequest from "@/utils/communication"
+import commonQueries from "@/utils/commonqueries"
 export default {
     name: 'newstory',
     components: {
@@ -62,10 +63,10 @@ export default {
                 }
                 else {
                     console.error("edit failed", e.target.status)
-                    this.$message.error("编辑失败")
+                    this.$message.error("编辑失败！" + commonQueries.getErrorMsg(xhr))
                 }
             }
-            xhr.onerror = ()=>{this.$message.error("编辑失败")}
+            xhr.onerror = ()=>{this.$message.error("编辑失败！" + commonQueries.getErrorMsg(xhr))}
         },
         getCategories() {
             let xhr = new XMLHttpRequest()
