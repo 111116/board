@@ -6,8 +6,23 @@
         <div class="post-content">{{content}}</div>
             <div class="post-time">{{time}}</div>
         <div class="bottom">
-            <div class="comment" @click="comment">0 评论</div>
+            <div class="comment" @click="commentToggle">{{comment.length}} 评论</div>
             <div class="fork" @click="dialogVisible=true;getBranch()">{{forkcnt}} 分支</div>
+        </div>
+        <div class="comments" v-if="commentVisible">
+            <div class="comment-entry" v-for="(re,index) in comment" :key="`fruit-${index}`" >
+                <!-- <img class="comment-avatar" :src="re.author.avatarurl"/> -->
+                <span class="comment-author">{{re.author.name}}: </span>
+                <span class="comment-content">{{re.content}}</span>
+            </div>
+            <el-form inline size="small" @submit.native.prevent>
+                <el-form-item>
+                    <el-input v-model="commentText" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="sendComment">评论</el-button>
+                </el-form-item>
+            </el-form>
         </div>
     </div>
     <el-dialog title="分支剧情" :visible.sync="dialogVisible">
@@ -51,6 +66,10 @@ export default {
             type: String,
             default: () => "unknown"
         },
+        comment: {
+            type: Array,
+            default: () => []
+        },
         storyid: {
             type: Number,
             default: () => -1
@@ -69,9 +88,11 @@ export default {
     data(){
         return {
             dialogVisible: false,
+            commentVisible: false,
             branchname: "",
             branchlist: [],
             branchloading: false,
+            commentText: "",
         }
     },
     computed: {
@@ -114,8 +135,32 @@ export default {
             }
             xhr.send()
         },
-        comment() {
-
+        commentToggle() {
+            this.commentVisible = !this.commentVisible
+        },
+        sendComment() {
+            if (this.commentText.length < 1) {
+                this.$message.error("内容不能少于一个字")
+                return
+            }
+            let xhr = new XMLHttpRequest()
+            this.branchloading = true
+            xhr.open("POST", "/api/thread/comment")
+            xhr.onload = (e) =>{
+                if (e.target.status == 200) {
+                    this.$message.success('评论成功');
+                    this.commentText = ""
+                    this.$parent.getPost()
+                }
+                else {
+                    this.$message.error("失败！" + commonQueries.getErrorMsg(xhr))
+                }
+            }
+            xhr.send(JSON.stringify({
+                story_id: this.storyid,
+                message_id: this.postid,
+                comment: this.commentText
+            }))
         }
     }
 }
@@ -172,6 +217,25 @@ hr {
 }
 .comment:hover {
     text-decoration: underline;
+}
+.comments .el-form-item {
+    margin-top: 4px;
+    margin-bottom: 2px;
+}
+.comment-entry {
+    position: relative;
+}
+.comment-avatar {
+    height: 30px;
+    border-radius: 50%;
+}
+.comment-author {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #888;
+}
+.comment-content {
+    font-size: 0.8em;
 }
 .fork {
     display: inline-block;

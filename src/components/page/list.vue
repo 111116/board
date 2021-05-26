@@ -248,6 +248,7 @@ export default {
     color: gray;
     padding-left: 10px;
     font-size: 0.8em;
+    cursor: default;
 }
 .story-info {
     font-size: 0.9em;
@@ -258,6 +259,7 @@ export default {
 .story-category {
     color: #555;
     padding-right: 8px;
+    cursor: default;
 }
 .story-likes {
     color: #16b;

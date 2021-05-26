@@ -26,7 +26,7 @@
             </el-table>
         </el-dialog>
         <postitem v-for="(re, index) in post.content"
-            :key="`fruit-${index}`" :author="re.author" :content="re.content" :time="re.time" :postid="index" :storyid="id" :forkcnt="post.fork_cnt[index]"/>
+            :key="`fruit-${index}`" :author="re.author" :content="re.content" :comment="re.comment" :time="re.time" :postid="index" :storyid="id" :forkcnt="post.fork_cnt[index]"/>
         <!-- reply -->
         <hr/>
         <template v-if="loggedin">
